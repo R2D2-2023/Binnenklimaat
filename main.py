@@ -11,7 +11,6 @@
 """ OTAA Node example compatible with the LoPy Nano Gateway """
 
 def lora_demo():
-
     from network import LoRa
     import socket
     import binascii
@@ -59,16 +58,17 @@ def lora_demo():
     # make the socket non-blocking
     s.setblocking(False)
 
-    for i in range (0, 200):
-        msg = input("Message to send:")
-        pkt = b'PKT #' + bytes([i]) + msg
-        print('Sending:', pkt)
-        s.send(pkt)
-        time.sleep(4)
-        rx, port = s.recvfrom(256)
-        if rx:
-            print('Received: {}, on port: {}'.format(rx, port))
-        time.sleep(6)
+    while True:
+        line = uart1.readline()
+        if (line is not None):
+            print(line)
+            pkt = bytes(line)
+            print('Sending:', pkt)
+            s.send(pkt)
+            time.sleep(26)
+        else:
+            time.sleep(0.5)
+        
 
 if __name__ == '__main__':
     lora_demo()
