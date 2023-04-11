@@ -11,22 +11,19 @@ Sensors climate_sensors(scd30,bme);
 #define SEALEVELPRESSURE_HPA (1013.5f)
 
 void setup(void) {
-  Serial.begin(9600);
-  while (!Serial){}      // will pause Zero, Leonardo, etc until serial console opens
-  delay(500);
-  climate_sensors.setUpSensors();
-  // Serial.println("test!");
+    Serial.begin(9600);
+    while (!Serial){}      // will pause Zero, Leonardo, etc until serial console opens
+    climate_sensors.setUpSensors();
 }
 
 void loop() {
-  // Serial.println("data is not ready");
-  if (climate_sensors.scd30.dataReady()){
-    Serial.println("data ready");
-    scd30.read();
-    climate_sensors.sendValues();
-  } else {
-    //Serial.println("No data");
-  }
-
-  delay(30);
+    if (climate_sensors.scd30.dataReady()){
+        climate_sensors.scd30.read();
+        climate_sensors.sendValues();
+        Serial.println("feest");
+        delay(10000);
+    } else {
+        Serial.println("niet feest");
+        delay(1000);
+    }
 }
