@@ -1,40 +1,38 @@
 # Binnenklimaat
-
 ## Introduction
-Het binnenklimaat gaat over het meten van de status van de lucht in gebouwen en kamers.
-De waarden die worden gemeten zijn: 
-* temperatuur
-* relatieve luchtvochtigheid
-* CO2 niveau
-* luchtdruk
-* Vluchtige Organische Stoffen. De meer voorkomende engelse benaming: volatile organic compounds
-Deze waarden, samen met de locatie data van het onderdeel "positie bepalen" worden dan verstuurd naar de back-end server die deze data verwerkt.
+Binnenklimaat is a repository for sensors and for sending data useing LoRa to the back-end. We use an arduino and a Pycom Lopy4 in our project. The arduino fetches the data from the chips and sends it through a serial bus to the Pycom Lopy4. The Pycom Lopy4 then sends that sensor data through a Long-Range ( Lo-Ra ) protocol to the TheThingsNetwork server from the back-end. The arduino code is written in C++ and the Pycom Lopy4 code is written in micro-Python.
+What our chips measure:
+* Temperature
+* Humidity
+* CO2 level
+* Airpressure
+* particulate matter
+These measurements, with the location of team "positie bepalen" are send to the back-end server.
 
 ## Hardware
-De chips die we hiervoor gebruiken zijn de:
-* BME280 ( temperatuur, relatieve luchtvochtigheid, luchtdruk )
-* SCD30 ( CO2 niveau ) 
-* CCS811 ( Vluchtige Organische Stoffen )
-
+The chips we use in our project are and what they are used for:
+* BME280 ( Temperature, Humidity, Airpressure )
+* SCD30 ( CO2 Level ) 
+* DSM501a ( particulate matter )
 
 ## Installation
-Libraries voor C++ code ( requirements ):
-
+Libraries we use for C++ code:
 ```* Wire
 * SPI
 * Adafruit_Sensor
 * Adafruit_BME280
 * Adafruit_SCD30
+* KarserDSM501
 * Arduino
 ```
 
-Libraries voor Python code ( requirements ):
-
+Libraries we use for Python code:
 ```* network  
 * socket
 * binascii
 * struct
 * time
 * config
+* network ( LoRa )
 ```
 
