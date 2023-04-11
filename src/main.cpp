@@ -2,7 +2,6 @@
 #include <Adafruit_SCD30.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BME280.h>
-#include "crc8.hpp"
 #include "sensors.hpp"
 
 Adafruit_SCD30  scd30;
