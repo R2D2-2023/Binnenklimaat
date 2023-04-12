@@ -46,9 +46,10 @@ void Sensors::sendValues(){
     unsigned int co2 = scd30.CO2 / 10; // done
     unsigned int pressure = (bme.readPressure() / 100.0F) - 800;
   
-    Serial.print(temperature);
-    Serial.print(humidity);
-    Serial.println(co2);
-    Serial.print(pressure);
+    Serial.print(temperature, HEX);
+    Serial.print(humidity, HEX);
+    Serial.print(co2, HEX);
+    Serial.println(pressure, HEX);
+  
     
 }
