@@ -10,15 +10,23 @@
 
 """ OTAA Node example compatible with the LoPy Nano Gateway """
 
-def lora_demo():
+# def lora_demo():
 
-    from network import LoRa
-    import socket
-    import binascii
-    import struct
-    import time
-    import config
+# Configure first UART bus to see the communication on the pc
+uart = machine.UART(0, 115200)
+os.dupterm(uart)
 
+# Configure second UART bus on pins P3(TX1) and P4(RX1)
+uart1 = machine.UART(1, baudrate=9600)
+
+from network import LoRa
+import socket
+import binascii
+import struct
+import time
+import config
+
+try:
     # initialize LoRa in LORAWAN mode.
     # Please pick the region that matches where you are using the device:
     # Asia = LoRa.AS923
@@ -59,16 +67,26 @@ def lora_demo():
     # make the socket non-blocking
     s.setblocking(False)
 
-    for i in range (0, 200):
-        msg = input("Message to send:")
-        pkt = b'PKT #' + bytes([i]) + msg
-        print('Sending:', pkt)
-        s.send(pkt)
-        time.sleep(4)
-        rx, port = s.recvfrom(256)
-        if rx:
-            print('Received: {}, on port: {}'.format(rx, port))
-        time.sleep(6)
+    while True:
+        line = uart1.readline()
+        if (line is not None):
+            line = line.decode('utf-8')
+            print(type(line))
+            values = line.split(",")
+            intValues = []
 
-if __name__ == '__main__':
-    lora_demo()
+            for value in values:
+                intValues.append(int(value))
+
+            print('Sending:', bytes(intValues))
+            s.send(bytes(intValues))
+            time.sleep(26)
+        else:
+            print("waiting for sensor data...")
+            time.sleep(0.5)
+            
+
+    # if __name__ == '__main__':
+    #     lora_demo()
+finally:
+    print("lolrip")
