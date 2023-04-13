@@ -13,7 +13,6 @@ These measurements, with the location of team "positie bepalen" are send to the 
 The chips we use in our project are and what they are used for:
 * BME280 ( Temperature, Humidity, Airpressure )
 * SCD30 ( CO2 Level ) 
-* DSM501a ( particulate matter )
 
 ## Installation
 Libraries we use for C++ code:
@@ -22,7 +21,6 @@ Libraries we use for C++ code:
 * Adafruit_Sensor
 * Adafruit_BME280
 * Adafruit_SCD30
-* KarserDSM501
 * Arduino
 ```
 
