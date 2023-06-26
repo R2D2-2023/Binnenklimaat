@@ -22,6 +22,11 @@ private:
 	unsigned int humidity;
 	unsigned int pressure;
 	unsigned int co2;
+	unsigned int voltage;
+	unsigned int pm1;
+	unsigned int pm25;
+	unsigned int pm10;
+
 
 	Filter temp_filter = Filter();
 	Filter hum_filter = Filter();
@@ -33,6 +38,7 @@ private:
 	Filter pm10_filter = Filter();
 
 	void sendValues();
+	void checkValues();
 
 public:
 	//constructor

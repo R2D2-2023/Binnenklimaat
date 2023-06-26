@@ -69,6 +69,7 @@ void Sensors::doMeasurements() {
         delay(3000);
     }
 
+    checkValues();
     sendValues();
 }
 
@@ -91,7 +92,7 @@ void Sensors::sendValues(){
     unsigned int pm1 = pm1_filter.getValue();
     unsigned int pm25 = pm25_filter.getValue();
     unsigned int pm10 = pm10_filter.getValue();
-    
+
     Serial.print(temperature);
     Serial.print(",");
     Serial.print(humidity);
@@ -107,4 +108,64 @@ void Sensors::sendValues(){
     Serial.print(pm25);
     Serial.print(",");
     Serial.println(pm10);
+}
+
+void Sensors::checkValues(){
+    int array_check_values[];
+    if(15 < temperature && temperature > 25){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
+    if(960 < pressure && pressure > 1050){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
+    if(200 < co2 && co2 > 800){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
+    if(30 < humidity && humidity > 70){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
+    if(11.6 < voltage && voltage > 12.5){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
+    if(pm1 > 5){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
+    if(pm25 > 12){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
+    if(pm10 > 45){
+        array_check_values.push_back(1);
+    }
+    else{
+        array_check_values.push_back(0)
+    }
+
 }
