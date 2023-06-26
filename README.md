@@ -7,8 +7,9 @@ What our chips measure:
 * CO2 level
 * Airpressure
 * particulate matter
-* Voltsensor ( Sensor is damaged )
+* Voltsensor 
 ```
+
 These measurements, with the location of team "positie bepalen" are send to the back-end server.
 
 ## Hardware
@@ -19,24 +20,6 @@ These measurements, with the location of team "positie bepalen" are send to the 
 * INA266 (Volt Sensor)
 ```
 
-## How we send and incrypt our data.
-```
-Value = measured value by sensor
-
-(T) temp = range: 0-100 - 1 byte (real temp = value / 2) (resolution = 0.5°C)
-(H) humidity = range: 0-100 - 1 byte (real humidity = value) (resolution = 3%)
-(C) co2 = range: 0-200 - 1 byte (real co2 = value * 10) (resolution = 30ppm + 3% measured value)
-(P) pressure = range: 0-250 - 1 byte (real pressure = value + 800) (resolution = 0.25%)
-
-sent message would be:
-THCP (T H C P)
-
-
-Our message will be send in bytes, particulate matter and position will not be included yet
-
-End-point users needs to decrypt and to use our made formulas to get the correct data. Otherwise it will be faulty.
- ```
-
 ## Installation
 Libraries we use for C++ code:
 ```* Wire
@@ -44,6 +27,7 @@ Libraries we use for C++ code:
 * Adafruit_Sensor
 * Adafruit_BME280
 * Adafruit_SCD30
+* INA226 robtillaart
 * Arduino
 ```
 
