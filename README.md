@@ -6,7 +6,8 @@ What our chips measure:
 * Humidity
 * CO2 level
 * Airpressure
-* particulate matter ( Not implemented yet )
+* particulate matter
+* Voltsensor ( Sensor is damaged )
 ```
 These measurements, with the location of team "positie bepalen" are send to the back-end server.
 
@@ -14,7 +15,8 @@ These measurements, with the location of team "positie bepalen" are send to the 
 ```The chips we use in our project are and what they are used for:
 * BME280 ( Temperature, Humidity, Airpressure )
 * SCD30 ( CO2 Level ) 
-* SPS30 ( Particulate Matter ) ( Not implemented yet )
+* SPS30 ( Particulate Matter )
+* INA266 (Volt Sensor)
 ```
 
 ## How we send and incrypt our data.
