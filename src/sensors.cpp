@@ -31,11 +31,11 @@ int Sensors::setUpSensors(){
         return 4;
     }
 
-    // Wire.begin();
-    // if (!INA.begin() )
-    // {
-    //     return 5;
-    // }
+    Wire.begin();
+    if (!INA.begin() )
+    {
+        return 5;
+    }
 
     // INA.setMaxCurrentShunt(1, 0.002);
 
@@ -43,6 +43,7 @@ int Sensors::setUpSensors(){
 }
 
 void Sensors::doMeasurements() {
+    INA.setMaxCurrentShunt(1, 0.002);
     for (int i = 0; i < 5; i++) {
         while(!scd30.dataReady()) {
             delay(10);
@@ -75,19 +76,18 @@ void Sensors::doMeasurements() {
 // (H) humidity = range: 0-100 - 1 byte (real humidity = value) (resolution = 3%)
 // (C) co2 = range: 0-200 - 1 byte (real co2 = value * 10) (resolution = 30ppm + 3% measured value)
 // (P) pressure = range: 0-250 - 1 byte (real pressure = value + 800) (resolution = 0.25%)
-// (PM) particulate matter = range: 0-300 - 2 bytes (real PM = value)
+// (V) voltage = range: 0-25V - 1 byte (real voltage = value / 10) (reoslution = 0.1v)
+// (PM) particulate matter = range: 0-250 - 1 byte (times 3) (real PM = value)
 
 // sent message would be:
-// THCP (T H C P PM)
-// i.e.
-// 411506015030 (41 150 60 150 30) 
+// THCP (T H C P V PM1 PM2.5 PM10)
 
 void Sensors::sendValues(){
-    unsigned int temperature = temp_filter.getValue();
+    unsigned int temperature = temp_filter.getValue() * 2;
     unsigned int humidity = hum_filter.getValue();
-    unsigned int co2 = co2_filter.getValue();
-    unsigned int pressure = pres_filter.getValue();
-    unsigned int voltage = volt_filter.getValue();
+    unsigned int co2 = co2_filter.getValue() / 10;
+    unsigned int pressure = pres_filter.getValue() - 800;
+    unsigned int voltage = volt_filter.getValue() * 10;
     unsigned int pm1 = pm1_filter.getValue();
     unsigned int pm25 = pm25_filter.getValue();
     unsigned int pm10 = pm10_filter.getValue();

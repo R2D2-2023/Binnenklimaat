@@ -1,21 +1,21 @@
 #include "Filter.hpp"
 
-
-// thank youuuu!!!! https://arduino.stackexchange.com/questions/38177/how-to-sort-elements-of-array-in-arduino-code
-int Filter::sort_desc(const void *cmp1, const void *cmp2) {
-    // Need to cast the void * to int *
-    int a = *((int *)cmp1);
-    int b = *((int *)cmp2);
-    return b - a;
-}
-
 void Filter::calcAvg() {
-    qsort(measurements, 5, sizeof(measurements[0]), sort_desc);
-    int sum = 0;
-    for (unsigned int i = 1; i < 4; i++)
+    float sum = 0;
+    float minimum = -1, maximum = -1;
+    for (unsigned int i = 0; i < 5; i++)
     {
+        if (minimum < measurements[i] || minimum == -1)
+        {
+            minimum = measurements[i];
+        }
+        if (maximum > measurements[i] || maximum == -1)
+        {
+            maximum = measurements[i];
+        }
         sum += measurements[i];
     }
+    sum = sum - minimum - maximum;
     average = (sum/3);
     if (last_average == -1)
     {
