@@ -1,7 +1,10 @@
 #include "sensors.hpp"
 
 Sensors::Sensors()
-{}
+{
+    uint8_t check_values_byte_1 = 0x00;
+    uint8_t check_values_byte_2 = 0x00;
+}
 
 int Sensors::setUpSensors(){
     if (!bme.begin(0X76)) {
@@ -111,61 +114,40 @@ void Sensors::sendValues(){
 }
 
 void Sensors::checkValues(){
-    int array_check_values[];
-    if(15 < temperature && temperature > 25){
-        array_check_values.push_back(1);
-    }
-    else{
-        array_check_values.push_back(0)
+    if(15 < temperature || temperature > 25){
+        check_values_byte_0 |= (0x01 << 1); //raise bit 1 of byte 0
     }
 
-    if(960 < pressure && pressure > 1050){
-        array_check_values.push_back(1);
-    }
-    else{
-        array_check_values.push_back(0)
+    if(960 < pressure || pressure > 1050){
+        check_values_byte_0 |= (0x01 << 3); //raise bit 3 of byte 0
     }
 
-    if(200 < co2 && co2 > 800){
-        array_check_values.push_back(1);
-    }
-    else{
-        array_check_values.push_back(0)
+    if(200 < co2 || co2 > 800){
+        check_values_byte_0 |= (0x01 << 5); //raise bit 5 of byte 0
     }
 
-    if(30 < humidity && humidity > 70){
-        array_check_values.push_back(1);
-    }
-    else{
-        array_check_values.push_back(0)
+    if(30 < humidity || humidity > 70){
+        check_values_byte_0 |= (0x01 << 2); //raise bit 2 of byte 0
     }
 
-    if(11.6 < voltage && voltage > 12.5){
-        array_check_values.push_back(1);
+    if(voltage > 14){
+        check_values_byte_1 |= (0x01 << 2); //raise bit 2 of byte 1
     }
-    else{
-        array_check_values.push_back(0)
+
+    if(voltage < 11,6){
+        check_values_byte_1 |= (0x01 << 3); //raise bit 3 of byte 1
     }
 
     if(pm1 > 5){
-        array_check_values.push_back(1);
-    }
-    else{
-        array_check_values.push_back(0)
+        check_values_byte_0 |= (0x01 << 7); //raise bit 7 of byte 0
     }
 
     if(pm25 > 12){
-        array_check_values.push_back(1);
-    }
-    else{
-        array_check_values.push_back(0)
+        check_values_byte_1 |= (0x01); //raise bit 0 of byte 1
     }
 
     if(pm10 > 45){
-        array_check_values.push_back(1);
-    }
-    else{
-        array_check_values.push_back(0)
+        check_values_byte_1 |= (0x01 << 1); //raise bit 1 of byte 1
     }
 
 }

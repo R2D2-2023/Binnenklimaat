@@ -27,6 +27,9 @@ private:
 	unsigned int pm25;
 	unsigned int pm10;
 
+    //Error bytes
+    uint8_t check_values_byte_0;
+    uint8_t check_values_byte_1;
 
 	Filter temp_filter = Filter();
 	Filter hum_filter = Filter();
