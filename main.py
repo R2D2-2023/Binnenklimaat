@@ -10,14 +10,23 @@
 
 """ OTAA Node example compatible with the LoPy Nano Gateway """
 
-def lora_demo():
-    from network import LoRa
-    import socket
-    import binascii
-    import struct
-    import time
-    import config
+# def lora_demo():
 
+# Configure first UART bus to see the communication on the pc
+uart = machine.UART(0, 115200)
+os.dupterm(uart)
+
+# Configure second UART bus on pins P3(TX1) and P4(RX1)
+uart1 = machine.UART(1, baudrate=9600)
+
+from network import LoRa
+import socket
+import binascii
+import struct
+import time
+import config
+
+try:
     # initialize LoRa in LORAWAN mode.
     # Please pick the region that matches where you are using the device:
     # Asia = LoRa.AS923
@@ -58,17 +67,45 @@ def lora_demo():
     # make the socket non-blocking
     s.setblocking(False)
 
+# // (T) temp = range: 0-100 - 1 byte (real temp = value / 2) (resolution = 0.5°C)
+# // (H) humidity = range: 0-100 - 1 byte (real humidity = value) (resolution = 3%)
+# // (C) co2 = range: 0-200 - 1 byte (real co2 = value * 10) (resolution = 30ppm + 3% measured value)
+# // (P) pressure = range: 0-250 - 1 byte (real pressure = value + 800) (resolution = 0.25%)
+# // (V) voltage = range: 0-25V - 1 byte (real voltage = value / 10) (reoslution = 0.1v)
+# // (PM) particulate matter = range: 0-250 - 1 byte (times 3) (real PM = value)
+
+# // sent message would be:
+# // THCP (T H C P V PM1 PM2.5 PM10)
+
+    # while True:
+    #     print("sending data...")
+    #     s.bind(1)
+    #     s.send(bytes([50, 40, 41, 216, 126, 0, 2, 1, 8, 10]))
+    #     time.sleep(30)
+
+
     while True:
         line = uart1.readline()
+        # line = uart.readline()
         if (line is not None):
-            print(line)
-            pkt = bytes(line)
-            print('Sending:', pkt)
-            s.send(pkt)
-            time.sleep(26)
-        else:
-            time.sleep(0.5)
-        
+            line = line.decode('utf-8')
+            values = line.split(",")
+            intValues = []
 
-if __name__ == '__main__':
-    lora_demo()
+            for value in values:
+                intValues.append(int(value))
+            
+
+            s.bind(intValues[0])
+            intValues.remove(intValues[0])
+            s.send(bytes(intValues))
+            time.sleep(5)
+        else:
+            uart.write("waiting for sensor data...\n")
+            time.sleep(0.5)
+            
+
+    # if __name__ == '__main__':
+    #     lora_demo()
+finally:
+    uart.write("lolrip")
