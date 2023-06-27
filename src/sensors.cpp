@@ -8,7 +8,8 @@ Sensors::Sensors()
 
 int Sensors::setUpSensors(){
     if (!bme.begin(0X76)) {
-        return 1;
+        check_values_byte_0 |= (0x01); //raise bit 0 of byte 0
+        // return 1;
     }
 
     int16_t ret;
@@ -16,33 +17,37 @@ int Sensors::setUpSensors(){
     sensirion_i2c_init();
 
     while (sps30_probe() != 0) {
-        return 2;
+        check_values_byte_0 |= (0x01 << 6); //raise bit 6 of byte 0
+        // return 2;
     }
 
     ret = sps30_set_fan_auto_cleaning_interval_days(auto_clean_days);
     if (ret) {
-        return 3;
+        check_values_byte_0 |= (0x01 << 6); //raise bit 6 of byte 0
+        // return 3;
     }
 
     ret = sps30_start_measurement();
     if (ret < 0) {
-        return 3;
+        check_values_byte_0 |= (0x01 << 6); //raise bit 6 of byte 0
+        // return 3;
     }
     
     // Try to initialize!
     if (!scd30.begin()) {
-        return 4;
+        check_values_byte_0 |= (0x01 << 4); //raise bit 4 of byte 0
+        // return 4;
     }
 
     Wire.begin();
     if (!INA.begin() )
     {
-        return 5;
+        check_values_byte_1 |= (0x01 << 4); //raise bit 4 of byte 1
+        // return 5;
     }
 
-    // INA.setMaxCurrentShunt(1, 0.002);
 
-    return 0;
+    // return 0; //returns 
 }
 
 void Sensors::doMeasurements() {
@@ -74,13 +79,16 @@ void Sensors::doMeasurements() {
 
     checkValues();
     sendValues();
+    if(check_values_byte_0 != 0 || check_values_byte_1 != 0){
+		sendErrorByte();
+	}
 }
 
 // (T) temp = range: 0-100 - 1 byte (real temp = value / 2) (resolution = 0.5°C)
 // (H) humidity = range: 0-100 - 1 byte (real humidity = value) (resolution = 3%)
 // (C) co2 = range: 0-200 - 1 byte (real co2 = value * 10) (resolution = 30ppm + 3% measured value)
 // (P) pressure = range: 0-250 - 1 byte (real pressure = value + 800) (resolution = 0.25%)
-// (V) voltage = range: 0-25V - 1 byte (real voltage = value / 10) (reoslution = 0.1v)
+// (V) voltage = range: 0-25V - 1 byte (real voltage = value / 10) (resolution = 0.1v)
 // (PM) particulate matter = range: 0-250 - 1 byte (times 3) (real PM = value)
 
 // sent message would be:
@@ -96,6 +104,8 @@ void Sensors::sendValues(){
     unsigned int pm25 = pm25_filter.getValue();
     unsigned int pm10 = pm10_filter.getValue();
 
+    Serial.print(1);
+    Serial.print(",");
     Serial.print(temperature);
     Serial.print(",");
     Serial.print(humidity);
@@ -111,6 +121,16 @@ void Sensors::sendValues(){
     Serial.print(pm25);
     Serial.print(",");
     Serial.println(pm10);
+}
+
+void Sensors::sendErrorByte(){
+    Serial.print(3);
+    Serial.print(",");
+    Serial.print(check_values_byte_0);
+    Serial.print(",");
+    Serial.print(check_values_byte_1);
+    check_values_byte_0 = 0x00;
+    check_values_byte_1 = 0x00;
 }
 
 void Sensors::checkValues(){

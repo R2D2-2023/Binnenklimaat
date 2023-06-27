@@ -8,7 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6aa905b9-9682-4c58-bc23-be69fad5a3f8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/include/sensors.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/include/sensors.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sensors.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/sensors.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

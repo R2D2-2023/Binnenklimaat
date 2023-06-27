@@ -42,6 +42,8 @@ private:
 
 	void sendValues();
 	void checkValues();
+	void sendErrorByte();
+
 
 public:
 	//constructor
