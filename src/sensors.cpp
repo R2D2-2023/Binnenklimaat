@@ -108,3 +108,9 @@ void Sensors::sendValues(){
     Serial.print(",");
     Serial.println(pm10);
 }
+
+void Sensors::sendLiveLocationValues(){
+  Serial.print(location_x);
+  Serial.print(",");
+  Serial.print(location_y);
+}
