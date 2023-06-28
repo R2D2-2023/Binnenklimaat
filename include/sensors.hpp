@@ -22,6 +22,8 @@ private:
 	unsigned int humidity;
 	unsigned int pressure;
 	unsigned int co2;
+	unsigned int location_x;
+	unsigned int location_y;
 
 	Filter temp_filter = Filter();
 	Filter hum_filter = Filter();
@@ -38,8 +40,8 @@ public:
 	//constructor
 	Sensors();
 
-
 	int setUpSensors();
 	void doMeasurements();
+	void sendLiveLocationValues();
 };
 #endif //SENSORS_HPP
