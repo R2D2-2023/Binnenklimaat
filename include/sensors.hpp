@@ -39,7 +39,8 @@ private:
 	Filter pm1_filter = Filter();
 	Filter pm25_filter = Filter();
 	Filter pm10_filter = Filter();
-
+	
+	void getValues();
 	void sendValues();
 	void checkValues();
 	void sendErrorByte();
@@ -47,10 +48,19 @@ private:
 
 public:
 	//constructor
-	Sensors();
+	Sensors(
+	unsigned int temp,
+    unsigned int hum,
+    unsigned int press,
+    unsigned int co2,
+    unsigned int volt,
+    unsigned int pm1,
+    unsigned int pm25,
+    unsigned int pm10
+	);
 
 
-	int setUpSensors();
+	void setUpSensors();
 	void doMeasurements();
 };
 #endif //SENSORS_HPP
