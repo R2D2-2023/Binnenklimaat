@@ -2,6 +2,10 @@
 #define Filter_HPP
 #include <Arduino.h>
 
+     /**
+     * @brief 
+     * class for filtering plausible faulty data
+     */
 class Filter
 {
 private:
