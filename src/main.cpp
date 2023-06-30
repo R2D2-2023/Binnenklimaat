@@ -8,6 +8,7 @@ void setup() {
 }
 
 void loop() {
+  climate_sensors.sendLiveLocationValues();
   climate_sensors.setUpSensors();
   climate_sensors.doMeasurements();
   delay(3000);
