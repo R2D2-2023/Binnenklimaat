@@ -94,7 +94,6 @@ void Sensors::getValues(){
     pm1 = pm1_filter.getValue();
     pm25 = pm25_filter.getValue();
     pm10 = pm10_filter.getValue();
-    Serial.print(pm10);
 }
 
 void Sensors::sendValues(){
