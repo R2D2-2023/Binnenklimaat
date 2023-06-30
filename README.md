@@ -39,3 +39,9 @@ Libraries we use for Python code:
 * config
 * network ( LoRa )
 ```
+
+## Doxyen
+If you want to see all private variables/functions. You need to change settings in Doxywizard. 
+* EXTRACT_PRIVATE = YES
+* HIDE_UNDOC_MEMBERS = YES
+* INTERAL_DOCS = YES 
