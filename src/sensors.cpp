@@ -13,7 +13,6 @@ void Sensors::setUpSensors(){
 
     while (sps30_probe() != 0) {
         check_values_byte_0 |= (0x01 << 6); //raise bit 6 of byte 0
-        Serial.print(sps30_probe());
     }
 
     ret = sps30_set_fan_auto_cleaning_interval_days(auto_clean_days);
@@ -95,23 +94,27 @@ void Sensors::getValues(){
 }
 
 void Sensors::sendValues(){
-    Serial.print(1);
-    Serial.print(",");
-    Serial.print(temperature);
-    Serial.print(",");
-    Serial.print(humidity);
-    Serial.print(",");
-    Serial.print(co2);
-    Serial.print(",");
-    Serial.print(pressure);
-    Serial.print(",");
-    Serial.print(voltage);
-    Serial.print(",");
-    Serial.print(pm1);
-    Serial.print(",");
-    Serial.print(pm25);
-    Serial.print(",");
-    Serial.println(pm10);
+    Serial2.print(1);
+    Serial2.print(",");
+    Serial2.print(temperature);
+    Serial2.print(",");
+    Serial2.print(humidity);
+    Serial2.print(",");
+    Serial2.print(co2);
+    Serial2.print(",");
+    Serial2.print(pressure);
+    Serial2.print(",");
+    Serial2.print(voltage);
+    Serial2.print(",");
+    Serial2.print(pm1);
+    Serial2.print(",");
+    Serial2.print(pm25);
+    Serial2.print(",");
+    Serial2.print(pm10);
+    Serial2.print(",");
+    Serial2.print(loc_x);
+    Serial2.print(",");
+    Serial2.println(loc_y);
 }
 
 void Sensors::sendLiveLocationValues(){
@@ -119,17 +122,28 @@ String incStr;
   if (Serial3.available() > 0 )
   {
     incStr = Serial3.readStringUntil('\n');
+    int i = 0;
+    for (; i < incStr.length(); i++)
+    {
+        if (incStr[i] == ',')
+        {
+            break;
+        }
+    }
+    loc_x = incStr.substring(0, i);
+    loc_y = incStr.substring(i+1);
     Serial2.print("4,");
     Serial2.println(incStr); 
+    loc_measured = false;
   }
 }
 
 void Sensors::sendErrorByte(){
-    Serial.print(3);
-    Serial.print(",");
-    Serial.print(check_values_byte_0);
-    Serial.print(",");
-    Serial.println(check_values_byte_1);
+    Serial2.print(3);
+    Serial2.print(",");
+    Serial2.print(check_values_byte_0);
+    Serial2.print(",");
+    Serial2.println(check_values_byte_1);
     check_values_byte_0 = 0x00;
     check_values_byte_1 = 0x00;
 }
@@ -171,13 +185,13 @@ void Sensors::checkValues(){
     if(voltage < 11.6 * 10){
         check_values_byte_1 |= (0x01 << 3); //raise bit 3 of byte 1
     }
-    // if(){
+    // if () {
     //  check_values_byte_1 |= (0x01 << 5); //raise bit 5 of byte 1
     // }
 
-    // if(){
-    //  check_values_byte_1 |= (0x01 << 6); //raise bit 6 of byte 1
-    // }
+    if (loc_measured) {
+     check_values_byte_1 |= (0x01 << 6); //raise bit 6 of byte 1
+    }
 
     // if(){
     //  check_values_byte_1 |= (0x01 << 7); //raise bit 7 of byte 1

@@ -5,6 +5,8 @@ Sensors climate_sensors = Sensors();
 
 void setup() {
   Serial.begin(115200);
+  Serial2.begin(57600);
+  Serial3.begin(9600);
 }
 
 void loop() {
