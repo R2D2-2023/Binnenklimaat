@@ -148,5 +148,10 @@ public:
      * Funtion that does the measurements
      */
 	void doMeasurements();
+     /**
+     * @brief 
+     * Funtion sends live location
+     */
+     void sendLiveLocationValues();
 };
 #endif //SENSORS_HPP
