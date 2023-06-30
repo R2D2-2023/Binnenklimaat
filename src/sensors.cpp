@@ -19,13 +19,11 @@ void Sensors::setUpSensors(){
     ret = sps30_set_fan_auto_cleaning_interval_days(auto_clean_days);
     if (ret) {
         check_values_byte_0 |= (0x01 << 6); //raise bit 6 of byte 0
-        Serial.print("b");
     }
 
     ret = sps30_start_measurement();
     if (ret < 0) {
         check_values_byte_0 |= (0x01 << 6); //raise bit 6 of byte 0
-        Serial.print("c");
     }
     
     if (!scd30.begin()) {
