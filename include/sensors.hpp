@@ -56,6 +56,11 @@ private:
      * The carbondioxide levels in parts per milion
      */
 	unsigned int co2;
+   /**
+     * @brief 
+     * The voltage in volt.
+     */
+	unsigned int voltage;
 	 /**
      * @brief 
      * The particulate matter 1.0
@@ -71,8 +76,11 @@ private:
      * The particulate matter 10
      */
 	unsigned int pm10;
-	
-    
+
+    //Error bytes
+    uint8_t check_values_byte_0;
+    uint8_t check_values_byte_1;
+  
 	/**
      * @brief 
      * Filter object to filter temperature
@@ -113,27 +121,28 @@ private:
      * Filter object to filter  The particulate matter 10
      */
 	Filter pm10_filter = Filter();
-
-
+	
+	void getValues();
     /**
      * @brief 
      * Function to send the measured values
      */
 	void sendValues();
+	void checkValues();
+	void sendErrorByte();
+
 
 public:
-
 	/**
      * @brief 
      * Construct a new Sensor object
      */
 	Sensors();
-
 	/**
      * @brief 
      * Funtion that sets up the sensors and returns int to indicate if a sensor won't set up.
      */
-	int setUpSensors();
+	void setUpSensors();
 	/**
      * @brief 
      * Funtion that does the measurements
