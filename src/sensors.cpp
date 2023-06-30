@@ -114,6 +114,16 @@ void Sensors::sendValues(){
     Serial.println(pm10);
 }
 
+void Sensors::sendLiveLocationValues(){
+String incStr;
+  if (Serial3.available() > 0 )
+  {
+    incStr = Serial3.readStringUntil('\n');
+    Serial2.print("4,");
+    Serial2.println(incStr); 
+  }
+}
+
 void Sensors::sendErrorByte(){
     Serial.print(3);
     Serial.print(",");
