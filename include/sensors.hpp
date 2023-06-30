@@ -49,14 +49,14 @@ private:
 public:
 	//constructor
 	Sensors(
-	unsigned int temp,
-    unsigned int hum,
-    unsigned int press,
-    unsigned int co2,
-    unsigned int volt,
-    unsigned int pm1,
-    unsigned int pm25,
-    unsigned int pm10
+	// unsigned int temp,
+    // unsigned int hum,
+    // unsigned int press,
+    // unsigned int co2,
+    // unsigned int volt,
+    // unsigned int pm1,
+    // unsigned int pm25,
+    // unsigned int pm10
 	);
 
 
