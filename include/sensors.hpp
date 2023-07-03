@@ -76,6 +76,21 @@ private:
      * The particulate matter 10
      */
 	unsigned int pm10;
+	 /**
+     * @brief 
+     * The X location as given by position
+     */
+     String loc_x = "0";
+	 /**
+     * @brief 
+     * The Y location as given by position
+     */
+     String loc_y = "0";
+	 /**
+     * @brief 
+     * Bool to indicate if a location has been measured yet. 
+     */
+     bool loc_measured = true;
 
     //Error bytes
     uint8_t check_values_byte_0;
