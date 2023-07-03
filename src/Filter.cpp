@@ -27,7 +27,7 @@ float Filter::getValue() {
     calcAvg();
     data_point_count = 0;
     float res = (average + last_average) / 2;
-    last_average = average;
+    last_average = res;
     return res;
 }
 
