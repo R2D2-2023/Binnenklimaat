@@ -100,7 +100,7 @@ private:
      * @brief 
      * Bool to indicate if a location has been measured yet. 
      */
-     bool loc_measured = false;
+     bool loc_measured = true;
 
     //Error bytes
     uint8_t check_values_byte_0;
