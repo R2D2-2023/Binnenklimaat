@@ -147,14 +147,30 @@ private:
      */
 	Filter pm10_filter = Filter();
 	
+     /**
+     * @brief
+     * Fetches values from sensors
+     */
 	void getValues();
     /**
      * @brief 
      * Function to send the measured values
      */
 	void sendValues();
+     /**
+     * @brief
+     * Function to check warning/error data
+     */
 	void checkValues();
+     /**
+     * @brief
+     * Function to send the error bytes
+     */
 	void sendErrorByte();
+     /**
+     * @brief
+     * Function to check if the location data is the same as the previous measurement
+     */
      bool isStuck();
 
 
